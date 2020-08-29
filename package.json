@@ -1,0 +1,26 @@
+{
+  "name": "hmsys-control",
+  "version": "0.0.1",
+  "description": "Control your HmSYS Nodes in on one Page",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucsoft-DevTeam/hmsys-control.git"
+  },
+  "keywords": [
+    "hmsys",
+    "webgen",
+    "lucsoft",
+    "control",
+    "webpack"
+  ],
+  "author": "lucsoft-devteam",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lucsoft-DevTeam/hmsys-control/issues"
+  },
+  "homepage": "https://github.com/lucsoft-DevTeam/hmsys-control#readme"
+}
