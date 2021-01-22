@@ -1,0 +1,7 @@
+:root {
+    --dashboardBackground: #0B0B0B;
+    --dashboardOverlay: #1A1A1A;
+    --dashboardCards: #2D2D2D;
+    --dashboardPrimary: #3F5AF3;
+    --dashboardPrimaryUnderlayer: rgb(63, 90, 243, 0.47);
+}

@@ -10,9 +10,10 @@
         "lib": [
             "es2019",
             "dom"
-        ],
+        ]
     },
     "include": [
-        "./src"
+        "./src",
+        "./declarations.d.ts"
     ]
 }

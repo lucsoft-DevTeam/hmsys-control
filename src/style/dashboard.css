@@ -1,0 +1,178 @@
+.dashbackground {
+    display: grid;
+    grid-template-columns: max-content auto;
+    background: var(--dashboardBackground);
+    height: 100vh;
+    height: -moz-available;
+    height: -webkit-fill-available;
+    grid-template-rows: 100%;
+}
+.dashboard {
+    background: var(--dashboardOverlay);
+    border-radius: 0.8rem 0 0 0.8rem;
+    overflow: hidden;
+}
+.nodelist {
+    display: block;
+    padding: 0rem 1rem;
+    user-select: none;
+}
+.nodelist .usericon {
+    display: block;
+    width: 3.2rem;
+    height: 3.2rem;
+    margin: 1rem 0;
+    border-radius: 5rem;
+}
+.nodelist .usericon.text {
+    background: var(--dashboardPrimaryUnderlayer);
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.nodelist .usericon path.background {
+    fill: var(--dashboardPrimaryUnderlayer);
+    transition: 0.1s ease;
+    transform: translate(-1px, -.3px);
+    z-index: 2;
+    d: path("M27.4695 0.254743C12.834 0.254743 0.969511 12.3431 0.969511 27.2547C0.969511 42.1664 12.834 54.2547 27.4695 54.2547C31.7348 54.2547 35.7647 53.228 39.3342 51.404C39.5953 51.2706 39.7641 51.2408 40.1756 50.8926C40.5712 50.7659 40.3858 50.7685 40.529 50.7237C40.5963 50.7027 40.6992 50.6314 40.8561 50.5549C41.2676 50.3544 40.997 50.4803 41.3369 50.2673C41.568 50.1224 41.7967 49.974 42.0231 49.8222C49.2195 44.9947 53.9695 36.6899 53.9695 27.2547C53.9695 12.3431 42.1051 0.254743 27.4695 0.254743Z");
+}
+.nodelist .usericon .iconForeground,  .nodelist .usericon .iconBackground{
+    transition: 0.2s ease;
+    z-index: 1;
+}
+.nodelist .usericon:not(.connected) .iconForeground, .nodelist .usericon:not(.connected) .iconBackground{
+    opacity: 0;
+    transform: translate(0,0) scale(0.9);
+}
+.nodelist .usericon.connected .iconForeground, .nodelist .usericon.connected .iconBackground{
+    opacity: 1;
+    transform: translate(0,0) scale(1);
+}
+.nodelist .usericon.connected .background {
+    transform: translate(0, 0);
+    d: path("M26.5 0C11.8645 0 0 12.0883 0 27C0 41.9117 11.8645 54 26.5 54C29.7242 54 32.8139 53.4133 35.6719 52.3391C36.1563 52.157 36.3035 51.5521 36.009 51.1266C34.6656 49.1857 33.875 46.808 33.875 44.2395C33.875 37.695 39.0077 32.3896 45.3393 32.3896C47.4084 32.3896 49.3494 32.9562 51.0251 33.9474C51.487 34.2206 52.1041 34.0079 52.2304 33.4863C52.7332 31.4085 53 29.236 53 27C53 12.0883 41.1355 0 26.5 0Z");
+}
+.nodelist .usericon.usericon image {
+    transition: 0.1s ease;
+}
+.nodelist .usericon.usericon.connected image {
+    x: -1px;
+    y: -.3px;
+    transition: 0;
+}
+.nodelist .usericon .textname {
+    fill: var(--dashboardPrimary);
+    font-weight: 400;
+    font-size: .7rem;
+}
+.nodelist .usericon.text span {
+    color: var(--dashboardPrimary);
+    font-weight: 400;
+    font-size: .7rem;
+}
+.nodelist .usericon.image {
+    overflow: hidden;
+}
+.nodelist .usericon.image img {
+    width: inherit;
+}
+
+.dashboard {
+    padding: 0 var(--gap);
+}
+.dashboard card {
+    --background-card: var(--dashboardCards)
+}
+.dashboard cardlist {
+    margin: 0
+}
+.dashboard card.rich .rich-title {
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+.progress .progressMeter {
+    stroke: rgb(63, 90, 243);
+    stroke-opacity: 0.47;
+}
+.progress text {
+    fill: white;
+    font-weight: 400;
+}
+.progress .progressValue {
+    stroke: rgb(63, 90, 243);
+    stroke-linecap: round;
+    stroke-dasharray: 246px;
+    stroke-dashoffset: 246px;
+    transition: stroke-dashoffset 300ms ease;
+    transform: translate(0, 100%) rotate(-90deg);
+}
+.logs.msg::before {
+    padding: 0.07rem 0.4rem 0.04rem;
+    display: inline-block;
+    font-size: 0.55rem;
+    border-radius: 1px;
+    margin-right: 0.4rem;
+    font-family: 'Roboto';
+    font-weight: 400;
+  text-transform: full-width;
+    transform: translate(0, -1.5px);
+}
+.logs.msg.info::before {
+    content: 'INFO';
+    background: yellow;
+    color: black;
+}
+.logs.msg.send::before {
+    content: 'SEND';
+    background: rgb(70, 70, 70);
+    color: rgb(160, 160, 160);
+    letter-spacing: -0.04rem;
+}
+.logs.msg.error::before {
+    content: 'ERROR';
+    background: red;
+    color: black;
+    letter-spacing: -0.09rem;
+}
+div.logs {
+    background: black;
+    font-size: 1.2rem;
+    color: #11d411;
+    display: flex;
+    flex-flow: column;
+    height: 22.5rem;
+    justify-content: flex-end;
+    font-size: 1.2rem;
+    font-family: monospace;
+    margin: 0 calc(-1 * var(--gap));
+    padding: var(--gap);
+    padding-bottom: calc(2 * var(--gap));
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    position: relative;
+}
+div.logs .input {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: calc(0.5 * var(--gap));
+    display: grid;
+    grid-template-columns: 3.6rem auto;
+}
+div.logs .input span {
+    display: inline-block;
+    text-align: end;
+    margin-right: 0.4rem;
+}
+div.logs .input input {
+    margin: 0;
+    padding: 0;
+    color: unset;
+    border-radius: 0px;
+    background: transparent;
+    display: inline-block;
+    font-size: 1rem;
+    font-family: monospace;
+}
