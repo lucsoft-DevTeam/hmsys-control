@@ -13,7 +13,6 @@ export function renderDashboard(id: number, ele: HTMLElement, web: WebGen, nav: 
     const log = document.createElement('div');
     log.classList.add('logs');
     const url = "wss://eu01.hmsys.de:444";
-
     const hmsys = new NetworkConnector(url)
 
     hmsys.event({
@@ -43,7 +42,7 @@ export function renderDashboard(id: number, ele: HTMLElement, web: WebGen, nav: 
         }
     }).connect(createLocalStorageProvider(async () => ({
         email: "default@lucsoft.de",
-        password: "default-user-login"
+        password: ""
     })))
 
     const inputDiv = document.createElement('div');
@@ -60,11 +59,7 @@ export function renderDashboard(id: number, ele: HTMLElement, web: WebGen, nav: 
     input.autofocus = true;
     input.onkeyup = (e) =>
     {
-        if (e.key == "Tab")
-        {
-            tabCount++;
-        } else
-            tabCount = 0;
+        tabCount = e.key == "Tab" ? tabCount + 1 : 0;
     }
     input.onkeypress = (e) =>
     {
