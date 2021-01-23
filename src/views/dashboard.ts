@@ -22,9 +22,6 @@ export function renderDashboard(id: number, ele: HTMLElement, web: WebGen, nav: 
         type: EventTypes.Disconnected,
         action: () => uiLog("error", "Disconnected from Server")
     }).event({
-        type: EventTypes.LoginSuccessful,
-        action: ({ data }) => uiLog("info", `Signed in as ` + data.email)
-    }).event({
         type: EventTypes.Message,
         action: ({ data }) =>
         {
@@ -43,7 +40,7 @@ export function renderDashboard(id: number, ele: HTMLElement, web: WebGen, nav: 
     }).connect(createLocalStorageProvider(async () => ({
         email: "default@lucsoft.de",
         password: ""
-    })))
+    }))).then((x: any) => uiLog("info", `Signed in as ` + x.email))
 
     const inputDiv = document.createElement('div');
     inputDiv.classList.add('input')
