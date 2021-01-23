@@ -1,52 +1,51 @@
 import { cards, WebGen } from '@lucsoft/webgen';
-import { HeadlessCard } from '@lucsoft/webgen/bin/lib/Cards';
-import type { NodeListElement } from '../components/nodeList';
-import { createConnection } from '../components/sessionHandler';
-import { usageCard } from '../components/usageCard';
+import { NetworkConnector, EventTypes, createLocalStorageProvider } from '@lucsoft/network-connector';
 
+import type { NodeListElement } from '../components/nodeList';
+import { usageCard } from '../components/usageCard';
 export function renderDashboard(id: number, ele: HTMLElement, web: WebGen, nav: () => NodeListElement[])
 {
     ele.innerHTML = "";
     ele.classList.add('dashboard');
     nav().forEach((x, i) => x.toggleState?.(i == id))
     const shell = document.createElement('article');
-    const navElement = nav()[ id ];
 
     const log = document.createElement('div');
     log.classList.add('logs');
-    const url = location.search.substr(1).split(/[&]/).find(x => x.startsWith('ip'))?.split('=')[ 1 ] ?? "eu01.hmsys.de";
-    const connection = createConnection({
-        id: navElement.id,
-        url: "wss://" + url,
-        getAuth: () => new Promise(tempLogin =>
+    const url = "wss://eu01.hmsys.de:444";
+
+    const hmsys = new NetworkConnector(url)
+
+    hmsys.event({
+        type: EventTypes.Conncted,
+        action: () => uiLog("info", "Connected to " + url),
+    }).event({
+        type: EventTypes.Disconnected,
+        action: () => uiLog("error", "Disconnected from Server")
+    }).event({
+        type: EventTypes.LoginSuccessful,
+        action: ({ data }) => uiLog("info", `Signed in as ` + data.email)
+    }).event({
+        type: EventTypes.Message,
+        action: ({ data }) =>
         {
-            tempLogin({ email: "default@lucsoft.de", password: "HAH LOL LOOING FOR A PASSWORD?" })
-        }),
-
-
-
-        onAuthed: (mail) => uiLog("info", `Signed in as ` + mail),
-        onConnect: () => uiLog("info", "Connected to " + "wss://" + url),
-        onDisconnect: () => uiLog("error", "Disconnected from Server"),
-        onMessage: (data) =>
-        {
-            console.log(data)
-
             if (data.type == "sync" && data.data.syncType == "targetHandler" && data.data.type.startsWith('@hmsys/dashboard:'))
             {
                 const command = data.data.type.split(/:(.+)/)[ 1 ];
                 if (command == "@hmsys/dashboard:help" || command == "@hmsys/dashboard:commands")
                 {
                     uiLog("info", `Registered Commands (${data.data.commands}): \n` + data.data.entires.map((x: any) => x.from + ":" + x.alias[ 0 ] + " — alternative: " + x.alias.splice(1, (x.alias.length / 2) - 1).join(' ')).join('\n'));
-
                 }
                 else
                     uiLog("system", JSON.stringify(data.data));
             } else
                 uiLog("system", JSON.stringify(data));
-
         }
-    })
+    }).connect(createLocalStorageProvider(async () => ({
+        email: "default@lucsoft.de",
+        password: "default-user-login"
+    })))
+
     const inputDiv = document.createElement('div');
     inputDiv.classList.add('input')
     const span = document.createElement('span');
@@ -71,7 +70,7 @@ export function renderDashboard(id: number, ele: HTMLElement, web: WebGen, nav: 
     {
         if (e.key !== "Enter")
             return;
-        connection.reply({
+        hmsys.ajson({
             action: "trigger",
             type: "@hmsys/dashboard",
             data: {

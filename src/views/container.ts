@@ -1,6 +1,6 @@
 import type { WebGen } from '@lucsoft/webgen';
 import { drawNodelist } from '../components/nodeList';
-import noImage from '../../res/qualitype_refinedlogo.png';
+import noImage from '../../res/star.png';
 import { renderDashboard } from './dashboard';
 
 export function render(web: WebGen)
