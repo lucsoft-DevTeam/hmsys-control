@@ -1,7 +1,4 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const path = require('path');
 
 module.exports = {
@@ -26,13 +23,7 @@ module.exports = {
             {
                 test: /\.css$/i,
                 use: [
-                    {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            hmr: process.env.NODE_ENV === 'development',
-                            reloadAll: true,
-                        },
-                    },
+                    'style-loader',
                     'css-loader',
                 ]
             },
@@ -43,15 +34,10 @@ module.exports = {
         ]
     },
     devServer: {
-        contentBase: "./dist"
+        contentBase: "./dist",
+        port: 8081
     },
     plugins: [
-        new MiniCssExtractPlugin({
-            filename: '[name].css',
-            chunkFilename: '[id].css',
-            esModule: true
-        }),
-        new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             inject: true,
             chunks: [ 'index' ],
@@ -59,8 +45,5 @@ module.exports = {
             filename: 'index.html',
             minify: { minifyCSS: true, minifyJS: true, removeComments: true }
         }),
-    ],
-    optimization: {
-        minimizer: [ new OptimizeCSSAssetsPlugin({}) ]
-    }
+    ]
 };
