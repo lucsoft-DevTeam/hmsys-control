@@ -62,13 +62,9 @@ export function renderDashboard(id: number, ele: HTMLElement, web: WebGen, nav: 
     {
         if (e.key !== "Enter")
             return;
-        hmsys.ajson({
-            action: "trigger",
-            type: "@hmsys/dashboard",
-            data: {
-                action: input.value.split(' ')[ 0 ]
-            }
-        });
+        hmsys.api.trigger("@hmsys/dashboard", {
+            action: input.value.split(' ')[ 0 ]
+        })
         uiLog("send", input.value || "\n")
         input.value = "";
     }
